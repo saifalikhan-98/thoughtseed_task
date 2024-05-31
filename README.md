@@ -24,7 +24,7 @@ This project is an Influencer Campaign Management Platform built using FastAPI. 
 1. Clone the repository:
 
     ````bash
-     git clone https://github.com/yourusername/influencer-platform.git
+     git clone https://github.com/saifalikhan-98/thoughtseed_task
     ````
 
 2. Go to the directory:
