@@ -1,17 +1,24 @@
 # Use an official Python runtime as a parent image
-FROM public.ecr.aws/lambda/python:3.10
+FROM python:3.11.6-slim-bullseye as python
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container
+# Copy the dependencies file to the working directory
 COPY requirements.txt .
 
-# Install dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install -r requirements.txt
 
-# Copy the rest of the application code into the container
-COPY . .
+# Copy the content of the local src directory to the working directory
+COPY . /app
 
-# Command to run the Lambda function
-CMD ["lambda_handler.handler"]
+# Expose port 8000 to allow communication to/from the FastAPI application
+EXPOSE 8000
+
+# Command to run the FastAPI application using Uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
